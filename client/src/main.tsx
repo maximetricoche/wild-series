@@ -8,6 +8,13 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 // Import the main app component
 import App from "./App";
 import Programs from "./pages/Programs";
+import ProgramDetail from "./pages/ProgramDetail";
+import CategoryIndex from "./pages/CategoryIndex";
+import CategoryNew from "./pages/CategoryNew";
+import CategoryDetail from "./pages/CategoryDetail";
+import CategoryEdit from "./pages/CategoryEdit";
+import ProgramNew from "./pages/ProgramNew";
+import ProgramEdit from "./pages/ProgramEdit";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -23,11 +30,43 @@ const router = createBrowserRouter([
   {
     path: "/", // The root path
     element: <App />, // Renders the App component for the home page
-  },
-  {
-    path: "/programs",
-    element: <Programs />,
-    loader: () => fetch(`${import.meta.env.VITE_API_URL}/api/programs`),
+    children: [
+      {
+        path: "/categories",
+        element: <CategoryIndex />,
+      },
+      {
+        path: "/categories/new",
+        element: <CategoryNew />,
+      },
+      {
+        path: "/categories/:id",
+        element: <CategoryDetail />,
+      },
+      {
+        path: "/categories/:id/edit",
+        element: <CategoryEdit />,
+      },
+      {
+        path: "/programs",
+        element: <Programs />,
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/api/programs`),
+      },
+      {
+        path: "/programs/:id",
+        element: <ProgramDetail />,
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/api/programs/${params.id}`),
+      },
+      {
+        path: "/programs/new",
+        element: <ProgramNew />,
+      },
+      {
+        path: "/programs/:id/edit",
+        element: <ProgramEdit />,
+      },
+    ],
   },
   // Try adding a new route! For example, "/about" with an About component
 ]);

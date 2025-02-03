@@ -14,7 +14,7 @@ class ItemRepository {
   async create(item: Omit<Item, "id">) {
     // Execute the SQL INSERT query to add a new item to the "item" table
     const [result] = await databaseClient.query<Result>(
-      "insert into item (title, user_id) values (?, ?)",
+      "INSERT INTO item (title, user_id) VALUES (?, ?)",
       [item.title, item.user_id],
     );
 
@@ -27,7 +27,7 @@ class ItemRepository {
   async read(id: number) {
     // Execute the SQL SELECT query to retrieve a specific item by its ID
     const [rows] = await databaseClient.query<Rows>(
-      "select * from item where id = ?",
+      "SELECT * FROM item WHERE id = ?",
       [id],
     );
 
@@ -37,7 +37,7 @@ class ItemRepository {
 
   async readAll() {
     // Execute the SQL SELECT query to retrieve all items from the "item" table
-    const [rows] = await databaseClient.query<Rows>("select * from item");
+    const [rows] = await databaseClient.query<Rows>("SELECT * FROM item");
 
     // Return the array of items
     return rows as Item[];

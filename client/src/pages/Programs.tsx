@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 type ProgramsData = {
   id: number;
@@ -14,20 +14,30 @@ export default function Programs() {
 
   return (
     <>
-      <h2>Liste des programmes</h2>
-      <ul>
+      <section className="flex items-start justify-between">
+        <h2 className="mb-10 text-2xl text-center uppercase">
+          Liste des programmes
+        </h2>
+        <Link
+          to={"/programs/new"}
+          className="px-5 py-2 bg-green-600 rounded-md text-green-50 hover:bg-green-700"
+        >
+          Ajouter
+        </Link>
+      </section>
+
+      <section className="flex flex-wrap justify-center gap-4">
         {programsData.map((program) => (
-          <li key={program.id}>
-            <img src={program.poster} alt={program.title} />
-            <h3>{program.title}</h3>
-            <p>{program.synopsis}</p>
-            <ul>
-              <li>{program.country}</li>
-              <li>{program.year}</li>
-            </ul>
-          </li>
+          <Link to={`/programs/${program.id}`} key={program.id}>
+            <article className="space-y-2">
+              <figure className="w-48">
+                <img src={program.poster} alt={program.title} />
+              </figure>
+              <h3 className="w-32 text-center">{program.title}</h3>
+            </article>
+          </Link>
         ))}
-      </ul>
+      </section>
     </>
   );
 }
